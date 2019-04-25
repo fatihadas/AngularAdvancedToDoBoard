@@ -1,0 +1,109 @@
+<div class="page home">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h2 class="page-title" (click)="reLoad()" style="cursor: pointer;">
+          <img class="svg" src="assets/svg/file.png" />
+          <span>Todo List App</span>
+        </h2>
+      </div>
+
+      <div class="col-md-6">
+
+        <form class="example-form">
+
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Yeni madde ekle" #newTodo>
+          </mat-form-field>
+          <button mat-raised-button color="primary" type="button" (click)="addToDo(newTodo)">Ekle</button>
+        </form>
+      </div>
+
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-12">
+
+        <mat-card>
+          <div cdkDropListGroup class="d-flex">
+
+            <div class="example-container">
+              <h5>Bekleyenler</h5>
+              <div cdkDropList #pendingList="cdkDropList" [cdkDropListConnectedTo]="[progressList]"
+                [cdkDropListData]="data.pendings" class="example-list" (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of data.pendings" cdkDrag>
+                    <img class="svg" src="assets/svg/hourglass.png" />
+                  <span class="todo-title" style="flex: 1;">{{item.todo}}</span>
+                  <div class="button" >
+                    <button mat-icon-button color="warn" (click)="removeToDo(item.id)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                <div class="text-center pt-3" *ngIf="data.pendings?.length === 0">
+                  <small>Bekleyen madde bulunamadı</small>
+                </div>
+              </div>
+              
+
+            </div>
+
+            <div class="example-container">
+              <h5>Yapım aşamasında</h5>
+              <div cdkDropList #progressList="cdkDropList" [cdkDropListConnectedTo]="[doneList,pendingList]"
+                [cdkDropListData]="data.inProgress" class="example-list" (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of data.inProgress" cdkDrag>
+                    <img class="svg" src="assets/svg/clock.png" />
+                    
+                    <span class="todo-title" style="flex: 1;">{{item.todo}}</span>
+                    <div class="button" >
+                      <button mat-icon-button color="warn" (click)="removeToDo(item.id)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                  
+                  </div>
+                  <div class="text-center pt-3" *ngIf="data.inProgress?.length === 0">
+                    <small>Yapım aşamasında madde bulunamadı</small>
+                  </div>
+
+              </div>
+            </div>
+
+            <div class="example-container">
+              <h5>Tamamlananlar</h5>
+              <div cdkDropList #doneList="cdkDropList" [cdkDropListConnectedTo]="[progressList]"
+                [cdkDropListData]="data.done" class="example-list" (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of data.done" cdkDrag>
+                    <img class="svg" src="assets/svg/like.png" />
+                    <span class="todo-title" style="flex: 1;">{{item.todo}}</span>
+                  <div class="button" >
+                    <button mat-icon-button color="warn" (click)="removeToDo(item.id)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div> 
+                </div>
+                <div class="text-center pt-3" *ngIf="data.done?.length === 0">
+                  <small>Tamamlanan madde bulunamadı</small>
+                </div>
+              </div>
+            </div>
+<!-- onMouseOut="this.style.opacity='0'" onMouseOver="this.style.opacity='1'" -->
+          </div>
+
+        </mat-card>
+        <div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 text-center mt-2">
+            <small>Copyright 2019 ToDoApp</small>
+          </div>
+        </div>
+
+
+
+
+
+
+      </div>
+    </div>
